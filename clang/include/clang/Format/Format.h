@@ -4320,6 +4320,24 @@ struct FormatStyle {
   /// \version 14
   PackConstructorInitializersStyle PackConstructorInitializers;
 
+  enum BinPackInheritanceListStyle : int8_t {
+    BPILS_AlwaysOnePerLine,
+    BPILS_OnePerLine,
+  };
+
+  struct PackInheritanceListStyle {
+    BinPackInheritanceListStyle BinPack;
+
+    bool operator==(const PackInheritanceListStyle &R) const {
+      return BinPack == R.BinPack;
+    }
+    bool operator!=(const PackInheritanceListStyle &R) const {
+      return !operator==(R);
+    }
+  };
+
+  PackInheritanceListStyle PackInheritanceList;
+
   /// Different ways to try to fit all parameters on a line.
   enum BinPackParametersStyle : int8_t {
     /// Bin-pack parameters.

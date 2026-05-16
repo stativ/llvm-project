@@ -160,6 +160,14 @@ template <> struct ScalarEnumerationTraits<FormatStyle::BinPackArgumentsStyle> {
 };
 
 template <>
+struct ScalarEnumerationTraits<FormatStyle::BinPackInheritanceListStyle> {
+  static void enumeration(IO &IO, FormatStyle::BinPackInheritanceListStyle &Value) {
+    IO.enumCase(Value, "AlwaysOnePerLine", FormatStyle::BPILS_AlwaysOnePerLine);
+    IO.enumCase(Value, "OnePerLine", FormatStyle::BPILS_OnePerLine);
+  }
+};
+
+template <>
 struct ScalarEnumerationTraits<FormatStyle::BinPackParametersStyle> {
   static void enumeration(IO &IO, FormatStyle::BinPackParametersStyle &Value) {
     IO.enumCase(Value, "BinPack", FormatStyle::BPPS_BinPack);
@@ -606,6 +614,12 @@ template <> struct ScalarEnumerationTraits<FormatStyle::OperandAlignmentStyle> {
     // For backward compatibility.
     IO.enumCase(Value, "true", FormatStyle::OAS_Align);
     IO.enumCase(Value, "false", FormatStyle::OAS_DontAlign);
+  }
+};
+
+template <> struct MappingTraits<FormatStyle::PackInheritanceListStyle> {
+  static void mapping(IO &IO, FormatStyle::PackInheritanceListStyle &Value) {
+    IO.mapOptional("BinPack", Value.BinPack);
   }
 };
 
@@ -1397,6 +1411,7 @@ template <> struct MappingTraits<FormatStyle> {
     IO.mapOptional("PackArguments", Style.PackArguments);
     IO.mapOptional("PackConstructorInitializers",
                    Style.PackConstructorInitializers);
+    IO.mapOptional("PackInheritanceList", Style.PackInheritanceList);
     IO.mapOptional("PackParameters", Style.PackParameters);
     IO.mapOptional("PenaltyBreakAssignment", Style.PenaltyBreakAssignment);
     IO.mapOptional("PenaltyBreakBeforeFirstCallParameter",
@@ -1956,6 +1971,7 @@ FormatStyle getLLVMStyle(FormatStyle::LanguageKind Language) {
   LLVMStyle.PackArguments = {/*BinPack=*/FormatStyle::BPAS_BinPack,
                              /*BreakAfter=*/0};
   LLVMStyle.PackConstructorInitializers = FormatStyle::PCIS_BinPack;
+  LLVMStyle.PackInheritanceList = {/*BinPack=*/FormatStyle::BPILS_AlwaysOnePerLine};
   LLVMStyle.PackParameters = {/*BinPack=*/FormatStyle::BPPS_BinPack,
                               /*BreakAfter=*/0};
   LLVMStyle.PointerAlignment = FormatStyle::PAS_Right;

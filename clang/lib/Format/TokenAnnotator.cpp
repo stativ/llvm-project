@@ -4219,6 +4219,7 @@ void TokenAnnotator::calculateFormattingInformation(AnnotatedLine &Line) const {
       Current->SpacesRequiredBefore = 1;
     }
 
+    // TODO
     const auto &Children = Prev->Children;
     if (!Children.empty() && Children.back()->Last->is(TT_LineComment)) {
       Current->MustBreakBefore = true;
@@ -5770,6 +5771,8 @@ bool TokenAnnotator::mustBreakBefore(AnnotatedLine &Line,
     return true;
   }
 
+  // TODO
+
   // Ignores the first parameter as this will be handled separately by
   // BreakFunctionDefinitionParameters or AlignAfterOpenBracket.
   if (Style.PackParameters.BinPack == FormatStyle::BPPS_AlwaysOnePerLine &&
@@ -6044,6 +6047,8 @@ bool TokenAnnotator::mustBreakBefore(AnnotatedLine &Line,
       return true;
     }
   }
+
+  // TODO
   // Break only if we have multiple inheritance.
   if (Style.BreakInheritanceList == FormatStyle::BILS_BeforeComma &&
       Right.is(TT_InheritanceComma)) {
